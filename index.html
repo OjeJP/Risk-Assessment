@@ -3,898 +3,863 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IS Risk Assessment & Policy Analysis — Oje Johnson Pamilerin</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --ink: #0f1117;
-    --ink-muted: #5a5f6e;
-    --ink-faint: #9099ac;
-    --surface: #ffffff;
-    --surface-2: #f5f6f8;
-    --surface-3: #eff0f3;
-    --border: rgba(15,17,23,0.10);
-    --border-mid: rgba(15,17,23,0.18);
-    --accent: #1a3a5c;
-    --accent-light: #e8f0f8;
-    --accent-mid: #2c5f9a;
-    --accent-bright: #3b82c4;
-    --risk-low: #2d6a4f;
-    --risk-low-bg: #d8f3dc;
-    --risk-med: #b45309;
-    --risk-med-bg: #fef3c7;
-    --risk-high: #991b1b;
-    --risk-high-bg: #fee2e2;
-    --tag-bg: #e8f0f8;
-    --tag-fg: #1a3a5c;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--surface-2);
-    color: var(--ink);
-    line-height: 1.65;
-    font-size: 15px;
-  }
-
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border-mid);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-  }
-  .nav-brand {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-size: 13px;
-    color: var(--ink-muted);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .nav-links a:hover { color: var(--ink); }
-
-  /* HERO */
-  .hero {
-    background: var(--accent);
-    color: #fff;
-    padding: 5rem 2rem 4rem;
-  }
-  .hero-inner { max-width: 860px; margin: 0 auto; }
-  .hero-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 1rem;
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
-  }
-  .hero h1 span { color: #7eb8f7; }
-  .hero-sub {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.72);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-  }
-  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .hero-tag {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.8);
-    background: rgba(255,255,255,0.07);
-  }
-
-  /* MAIN LAYOUT */
-  main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-
-  /* SECTION HEADERS */
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 0.5px solid var(--border-mid);
-  }
-  .section-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent-bright);
-    min-width: 28px;
-  }
-  .section-header h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  section { margin-bottom: 4rem; }
-
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1.25rem;
-  }
-  @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
-  .about-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-  }
-  .about-card h3 {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 0.6rem;
-  }
-  .about-card p {
-    font-size: 14px;
-    color: var(--ink-muted);
-    line-height: 1.6;
-  }
-
-  /* PROJECT CARDS */
-  .project-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border-mid);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .project-card-header {
-    background: var(--accent-light);
-    border-bottom: 0.5px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .project-card-header-left h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 0.3rem;
-  }
-  .project-card-header-left p {
-    font-size: 13px;
-    color: var(--ink-muted);
-  }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: var(--tag-bg);
-    color: var(--tag-fg);
-    border: 0.5px solid rgba(26,58,92,0.2);
-  }
-  .project-body { padding: 1.5rem; }
-  .project-body > p {
-    font-size: 14px;
-    color: var(--ink-muted);
-    margin-bottom: 1.25rem;
-    line-height: 1.7;
-  }
-
-  /* SUBSECTIONS inside a project */
-  .subsection { margin-bottom: 1.75rem; }
-  .subsection h4 {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 0.75rem;
-  }
-
-  /* METHODOLOGY PIPELINE */
-  .pipeline {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-  .pipeline-step {
-    flex: 1;
-    min-width: 110px;
-    background: var(--accent-light);
-    border: 0.5px solid rgba(26,58,92,0.15);
-    border-radius: 6px;
-    padding: 0.6rem 0.75rem;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--accent);
-    text-align: center;
-    position: relative;
-  }
-  .pipeline-step + .pipeline-step { margin-left: 6px; }
-  .pipeline-arrow {
-    font-size: 14px;
-    color: var(--ink-faint);
-    flex-shrink: 0;
-    margin: 0 2px;
-  }
-
-  /* ASSET TABLE */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  .data-table thead tr {
-    background: var(--surface-3);
-    border-bottom: 1px solid var(--border-mid);
-  }
-  .data-table th {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    padding: 8px 12px;
-    text-align: left;
-  }
-  .data-table td {
-    padding: 9px 12px;
-    color: var(--ink-muted);
-    border-bottom: 0.5px solid var(--border);
-    vertical-align: top;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tbody tr:hover { background: var(--surface-2); }
-
-  /* RISK BADGES */
-  .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 9px;
-    border-radius: 20px;
-  }
-  .badge-low { background: var(--risk-low-bg); color: var(--risk-low); }
-  .badge-med { background: var(--risk-med-bg); color: var(--risk-med); }
-  .badge-high { background: var(--risk-high-bg); color: var(--risk-high); }
-
-  /* RISK MATRIX VISUAL */
-  .risk-matrix-wrap {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .risk-matrix {
-    display: grid;
-    grid-template-columns: 32px repeat(5, 44px);
-    grid-template-rows: repeat(5, 44px) 32px;
-    gap: 3px;
-    font-size: 11px;
-  }
-  .rm-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 12px;
-    color: #fff;
-  }
-  .rm-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--ink-faint);
-  }
-  .rm-green { background: #2d6a4f; }
-  .rm-yellow { background: #b45309; }
-  .rm-red { background: #991b1b; }
-  .rm-axis-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    text-align: center;
-    grid-column: 1;
-    grid-row: 1 / span 5;
-  }
-  .risk-findings { flex: 1; min-width: 200px; }
-  .finding-row {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 0.65rem;
-  }
-  .finding-score {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--ink);
-    min-width: 28px;
-  }
-  .finding-label { font-size: 13px; color: var(--ink-muted); }
-
-  /* CONTROLS GRID */
-  .controls-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
-  }
-  .control-item {
-    background: var(--surface-2);
-    border: 0.5px solid var(--border);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-  }
-  .control-item code {
-    display: block;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent-mid);
-    margin-bottom: 4px;
-  }
-  .control-item p { font-size: 12px; color: var(--ink-muted); }
-
-  /* ESSAY */
-  .finding-block {
-    display: grid;
-    grid-template-columns: 3px 1fr;
-    gap: 0 1rem;
-    margin-bottom: 1rem;
-  }
-  .finding-block .bar {
-    background: var(--accent-bright);
-    border-radius: 2px;
-  }
-  .finding-block .content h5 {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-  .finding-block .content p {
-    font-size: 13px;
-    color: var(--ink-muted);
-    line-height: 1.6;
-  }
-
-  /* SKILLS SECTION */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-  }
-  .skill-pill {
-    background: var(--surface);
-    border: 0.5px solid var(--border-mid);
-    border-radius: 8px;
-    padding: 0.6rem 1rem;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
-    text-align: center;
-  }
-  .skill-pill span {
-    display: block;
-    font-size: 11px;
-    color: var(--ink-faint);
-    font-weight: 400;
-    margin-top: 2px;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 0.5px solid var(--border-mid);
-    padding: 2rem;
-    text-align: center;
-    font-size: 12px;
-    color: var(--ink-faint);
-  }
-
-  /* TABLE SCROLL */
-  .table-scroll { overflow-x: auto; border-radius: 8px; border: 0.5px solid var(--border-mid); }
-
-  @media (max-width: 500px) {
-    nav { padding: 0 1rem; }
-    .nav-links { gap: 1rem; }
-    main { padding: 2rem 1rem 4rem; }
-    .project-body { padding: 1rem; }
-  }
-</style>
+<title>IS Risk Assessment — Oje Johnson Pamilerin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f2744;--navy2:#1a3a5c;--navy3:#2c5f9a;--blue:#3b82c4;--blue-lt:#e8f0f8;
+  --ink:#0f1117;--ink2:#3d4354;--ink3:#6b7280;--ink4:#9ca3af;
+  --bg:#f8f9fb;--white:#fff;--surface:#f1f4f8;
+  --bdr:rgba(15,17,35,0.1);--bdr2:rgba(15,17,35,0.17);
+  --red:#991b1b;--red-bg:#fee2e2;--red2:#b91c1c;
+  --amber:#92400e;--amber-bg:#fef3c7;--amber2:#b45309;
+  --green:#166534;--green-bg:#dcfce7;--green2:#15803d;
+  --tag-bg:#dbeafe;--tag-fg:#1e40af;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
+
+/* SCROLL BAR */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:9999;transition:width .08s linear}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;height:54px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:.5px solid var(--bdr2);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;gap:1rem}
+.nav-logo{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy2);white-space:nowrap}
+.nav-links{display:flex;gap:1.5rem;list-style:none;flex-shrink:0}
+.nav-links a{font-size:12px;color:var(--ink3);text-decoration:none;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--navy2)}
+
+/* HERO */
+.hero{background:var(--navy);color:#fff;padding:4.5rem 2rem 3.5rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;animation:drift 25s linear infinite;pointer-events:none}
+@keyframes drift{to{transform:translateY(48px)}}
+.hero-blob{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,196,.2) 0%,transparent 68%);top:-180px;right:-120px;pointer-events:none}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1}
+.hero-kicker{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.9rem}
+.hero h1{font-size:clamp(1.9rem,4.5vw,3rem);font-weight:700;line-height:1.13;letter-spacing:-.025em;margin-bottom:1.1rem}
+.hero h1 em{font-style:normal;color:#93c5fd}
+.hero-desc{font-size:.95rem;color:rgba(255,255,255,.65);max-width:580px;line-height:1.75;margin-bottom:1.75rem}
+.chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:2.25rem}
+.chip{font-size:11px;font-weight:500;padding:3px 11px;border-radius:20px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.75);background:rgba(255,255,255,.06);transition:background .2s}
+.chip:hover{background:rgba(255,255,255,.13)}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:1.75rem;border-top:.5px solid rgba(255,255,255,.1)}
+.hs-num{font-size:2rem;font-weight:700;color:#93c5fd;line-height:1;margin-bottom:3px}
+.hs-lbl{font-size:11px;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.07em}
+
+/* LAYOUT */
+.body-wrap{max-width:960px;margin:0 auto;padding:2.5rem 2rem 6rem}
+
+/* SECTION */
+.sec{margin-bottom:3.5rem;scroll-margin-top:66px}
+.sec-hd{display:flex;align-items:center;gap:.85rem;margin-bottom:1.4rem;padding-bottom:.7rem;border-bottom:.5px solid var(--bdr2)}
+.sec-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);background:var(--blue-lt);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.sec-hd h2{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+
+/* PHASE ACCORDION */
+.phase-wrap{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.phase-btn{display:flex;align-items:center;gap:12px;width:100%;background:var(--white);border:.5px solid var(--bdr2);border-radius:8px;padding:.85rem 1.1rem;cursor:pointer;text-align:left;transition:background .15s,border-color .15s}
+.phase-btn:hover,.phase-btn.open{background:var(--blue-lt);border-color:rgba(59,130,196,.35)}
+.phase-num{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--blue);background:#dbeafe;padding:2px 7px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.phase-title{font-size:13px;font-weight:600;color:var(--navy2);flex:1}
+.phase-arrow{font-size:11px;color:var(--ink4);transition:transform .2s;flex-shrink:0}
+.phase-btn.open .phase-arrow{transform:rotate(90deg)}
+.phase-body{display:none;background:var(--white);border:.5px solid var(--bdr2);border-top:none;border-radius:0 0 8px 8px;padding:1.1rem 1.25rem;font-size:13px;color:var(--ink2);line-height:1.7}
+.phase-body.open{display:block}
+.phase-body strong{color:var(--navy2)}
+.phase-body ul{padding-left:1.2rem;margin-top:.4rem}
+.phase-body li{margin-bottom:.25rem}
+
+/* CARDS */
+.card{background:var(--white);border:.5px solid var(--bdr2);border-radius:10px;overflow:hidden;margin-bottom:1.25rem;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 5px 22px rgba(15,39,68,.08);transform:translateY(-1px)}
+.card-hd{background:var(--blue-lt);border-bottom:.5px solid var(--bdr);padding:1rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.card-hd h3{font-size:.95rem;font-weight:700;color:var(--navy2);margin-bottom:.2rem}
+.card-hd p{font-size:12px;color:var(--ink3)}
+.card-body{padding:1.25rem}
+.card-intro{font-size:13px;color:var(--ink2);margin-bottom:1.25rem;line-height:1.75}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--tag-bg);color:var(--tag-fg);border:.5px solid rgba(30,64,175,.18)}
+
+/* SUBSECTION */
+.sub{margin-bottom:1.75rem}
+.sub-hd{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink4);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.sub-hd::after{content:'';flex:1;height:.5px;background:var(--bdr)}
+
+/* TABLES */
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:.5px solid var(--bdr2);margin-bottom:.5rem}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--surface)}
+th{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);padding:8px 11px;text-align:left;white-space:nowrap;border-bottom:.5px solid var(--bdr2)}
+td{padding:8px 11px;color:var(--ink2);border-bottom:.5px solid var(--bdr);vertical-align:top;transition:background .12s}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#f0f6ff}
+.tbl-note{font-size:11px;color:var(--ink4);font-style:italic;margin-bottom:.75rem}
+code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--navy3);background:var(--blue-lt);padding:1px 5px;border-radius:3px}
+
+/* BADGES */
+.b{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-blue{background:var(--tag-bg);color:var(--tag-fg)}
+.b-gray{background:var(--surface);color:var(--ink3);border:.5px solid var(--bdr2)}
+
+/* RISK BARS */
+.rbar-wrap{display:flex;flex-direction:column;gap:10px;margin:1rem 0}
+.rbar-row{display:flex;align-items:center;gap:10px}
+.rbar-lbl{font-size:12px;color:var(--ink2);min-width:200px}
+.rbar-track{flex:1;height:8px;background:var(--surface);border-radius:4px;overflow:hidden}
+.rbar-fill{height:100%;border-radius:4px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+.rbar-fill.amber{background:var(--amber2)}
+.rbar-fill.green{background:var(--green2)}
+.rbar-score{font-size:12px;font-weight:700;min-width:60px;text-align:right}
+
+/* FINDING BLOCKS */
+.fb{display:grid;grid-template-columns:3px 1fr;gap:0 .9rem;margin-bottom:.9rem;transition:transform .18s;cursor:default}
+.fb:hover{transform:translateX(4px)}
+.fb .bar{border-radius:2px}
+.fb .fc h5{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.fb .fc p{font-size:12px;color:var(--ink2);line-height:1.65}
+
+/* CONTROL CARDS */
+.ctrl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.ctrl{background:var(--surface);border:.5px solid var(--bdr);border-radius:7px;padding:.75rem .9rem;transition:border-color .2s,background .2s,transform .18s;cursor:default}
+.ctrl:hover{border-color:var(--blue);background:var(--blue-lt);transform:translateY(-2px)}
+.ctrl code{display:block;font-size:11px;font-weight:700;color:var(--navy3);margin-bottom:4px}
+.ctrl p{font-size:11px;color:var(--ink3);line-height:1.5}
+
+/* INFO BOX */
+.ibox{background:var(--blue-lt);border:.5px solid rgba(59,130,196,.25);border-left:3px solid var(--blue);border-radius:0 7px 7px 0;padding:.9rem 1.1rem;font-size:12px;color:var(--ink2);line-height:1.65;margin:.75rem 0}
+.ibox strong{color:var(--navy2)}
+.ibox ul{padding-left:1.1rem;margin-top:.35rem}
+.ibox li{margin-bottom:.2rem}
+
+/* SKILLS */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
+.skill{background:var(--white);border:.5px solid var(--bdr2);border-radius:8px;padding:.7rem .9rem;text-align:center;transition:border-color .2s,background .2s,transform .2s;cursor:default}
+.skill:hover{border-color:var(--blue);background:var(--blue-lt);transform:translateY(-3px);box-shadow:0 4px 12px rgba(15,39,68,.08)}
+.skill-name{display:block;font-size:12px;font-weight:600;color:var(--ink)}
+.skill-sub{display:block;font-size:10px;color:var(--ink4);margin-top:2px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
+
+/* FOOTER */
+footer{border-top:.5px solid var(--bdr2);padding:1.75rem 2rem;text-align:center;font-size:11px;color:var(--ink4)}
+
+/* BACK TOP */
+#btop{position:fixed;bottom:1.75rem;right:1.75rem;width:38px;height:38px;background:var(--navy2);color:#fff;border:none;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;z-index:300;box-shadow:0 4px 14px rgba(15,39,68,.28)}
+#btop.on{opacity:1;transform:none}
+#btop:hover{background:var(--navy3)}
+
+@media(max-width:600px){nav{padding:0 1rem}.nav-links{gap:1rem}.body-wrap{padding:1.5rem 1rem 4rem}.hero{padding:3rem 1rem 2.5rem}}
+</style>
 </head>
 <body>
+<div id="prog"></div>
+<button id="btop" onclick="scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
+<!-- NAV -->
 <nav>
-  <span class="nav-brand">Oje Johnson Pamilerin — IS Projects</span>
+  <span class="nav-logo">Oje Johnson Pamilerin</span>
   <ul class="nav-links">
-    <li><a href="#project-1">Risk Assessment</a></li>
-    <li><a href="#project-2">Policy Analysis</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="https://github.com/yourusername/infosec-risk-project" target="_blank" rel="noopener">GitHub ↗</a></li>
+    <li><a href="#assets">Assets</a></li>
+    <li><a href="#vulns">Vulnerabilities</a></li>
+    <li><a href="#threats">Threats</a></li>
+    <li><a href="#risks">Risks</a></li>
+    <li><a href="#controls">Controls</a></li>
+    <li><a href="#boeing">Boeing Essay</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-blob"></div>
   <div class="hero-inner">
-    <p class="hero-eyebrow">Graduate Project — ITMO University, 2023</p>
-    <h1>Information Security<br><span>Risk Assessment &amp; Policy Analysis</span></h1>
-    <p class="hero-sub">Two applied security projects: a full ISO 27005 risk treatment for a simulated aviation tech company (JOP Corp), and a critical gap analysis of Boeing's information security policy against ISO 27001/27002.</p>
-    <div class="hero-tags">
-      <span class="hero-tag">ISO 27001</span>
-      <span class="hero-tag">ISO 27005</span>
-      <span class="hero-tag">ISO 31000</span>
-      <span class="hero-tag">Risk Assessment</span>
-      <span class="hero-tag">Threat Modeling</span>
-      <span class="hero-tag">ISMS</span>
-      <span class="hero-tag">Policy Analysis</span>
+    <p class="hero-kicker">Graduate Coursework · ITMO University · Faculty of Secure Information Technologies · 2023</p>
+    <h1>Information Security<br><em>Risk Assessment, Implementation &amp; Control</em></h1>
+    <p class="hero-desc">A complete ISO 27005 risk management engagement for JOP Corp — a simulated aviation technology company. Covers all five risk phases: asset identification, vulnerability assessment, threat modeling, risk quantification, and control selection. Includes a policy gap analysis of Boeing's IS framework against ISO 27001/27002.</p>
+    <div class="chip-row">
+      <span class="chip">ISO/IEC 27001:2013</span><span class="chip">ISO/IEC 27005:2008</span><span class="chip">ISO/IEC 31000:2018</span>
+      <span class="chip">ISO/IEC 22301:2012</span><span class="chip">ISO/IEC 13335-1:2004</span>
+      <span class="chip">Risk Assessment</span><span class="chip">CVE Analysis</span><span class="chip">Threat Modeling</span>
+      <span class="chip">Annex A Controls</span><span class="chip">ISMS</span><span class="chip">Policy Gap Analysis</span>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hs-num" data-c="21">0</div><div class="hs-lbl">Assets identified</div></div>
+      <div><div class="hs-num" data-c="4">0</div><div class="hs-lbl">CVEs mapped</div></div>
+      <div><div class="hs-num" data-c="5">0</div><div class="hs-lbl">Risk phases</div></div>
+      <div><div class="hs-num" data-c="6">0</div><div class="hs-lbl">Priority assets</div></div>
+      <div><div class="hs-num" data-c="12">0</div><div class="hs-lbl">Annex A controls</div></div>
     </div>
   </div>
 </div>
 
-<main>
+<div class="body-wrap">
 
-  <!-- PROJECT 1 -->
-  <section id="project-1">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2>Information Security Risk Assessment — JOP Corp</h2>
-    </div>
-    <div class="project-card">
-      <div class="project-card-header">
-        <div class="project-card-header-left">
-          <h3>IS Risk Assessment, Implementation &amp; Control</h3>
-          <p>Course: Information Security Risk Management &nbsp;·&nbsp; ITMO University, 2023</p>
-        </div>
-        <div class="project-tags">
-          <span class="tag">ISO 27001</span>
-          <span class="tag">ISO 27005</span>
-          <span class="tag">ISO 31000</span>
-          <span class="tag">Asset Management</span>
-          <span class="tag">Threat Modeling</span>
-          <span class="tag">Risk Matrix</span>
-        </div>
-      </div>
-      <div class="project-body">
-        <p>Applied a full ISO 27005 risk management lifecycle to <strong>JOP Corp</strong> — a simulated aviation technology company. The engagement covered 21 assets across five risk domains, producing actionable controls mapped to ISO 27001 Annex A for senior management review.</p>
+<!-- ── INTRODUCTION ── -->
+<div class="sec reveal" id="intro">
+  <div class="sec-hd"><span class="sec-tag">Introduction</span><h2>Course objectives &amp; methodology</h2></div>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-intro">The goal of this coursework was to select and implement risk identification and assessment methods for the fictional company <strong>JOP Corp</strong> — an imaginary flight school with significant technological operations. The five tasks were: identify and assess assets; identify and assess vulnerabilities; identify and assess threats; identify and assess risks and residual risks; and make recommendations for top management for the protection of IT security.</p>
+      <div class="sub">
+        <div class="sub-hd">Five-phase methodology</div>
+        <div class="phase-wrap">
+          <div class="phase-btn" onclick="togglePhase(this)">
+            <span class="phase-num">PHASE 1</span>
+            <span class="phase-title">Assets identification and assessment</span>
+            <span class="phase-arrow">▶</span>
+          </div>
+          <div class="phase-body">
+            <strong>Goal:</strong> Define the list of assets for JOP Corp and perform identification and assessment procedures.<br><br>
+            <strong>Tasks:</strong><ul>
+              <li>Select all applicable types of assets for JOP Corp</li>
+              <li>Perform identification of assets in accordance with ISO 27001 / ISO 31000</li>
+              <li>Create a list of recommendations for top management about IT security protection for assets</li>
+            </ul>
+            <br><strong>Method:</strong> Assets assessed using two cost evaluation methods — Qualitative (Very Big, Big, Medium, Small, Very Small / High, Medium, Low) and Quantitative (5,4,3,2,1). Asset mark threshold set at 5 for escalation.
+          </div>
 
-        <!-- METHODOLOGY -->
-        <div class="subsection">
-          <h4>Methodology pipeline</h4>
-          <div class="pipeline">
-            <div class="pipeline-step">Asset Identification &amp; Assessment</div>
-            <div class="pipeline-arrow">→</div>
-            <div class="pipeline-step">Vulnerability Assessment</div>
-            <div class="pipeline-arrow">→</div>
-            <div class="pipeline-step">Threat Assessment</div>
-            <div class="pipeline-arrow">→</div>
-            <div class="pipeline-step">Risk &amp; Residual Risk</div>
-            <div class="pipeline-arrow">→</div>
-            <div class="pipeline-step">Control Selection</div>
+          <div class="phase-btn" onclick="togglePhase(this)">
+            <span class="phase-num">PHASE 2</span>
+            <span class="phase-title">Vulnerabilities identification and assessment</span>
+            <span class="phase-arrow">▶</span>
           </div>
-        </div>
+          <div class="phase-body">
+            <strong>Goal:</strong> Define the list of vulnerabilities for JOP Corp assets and perform assessment procedures.<br><br>
+            <strong>Tasks:</strong><ul>
+              <li>Select all applicable vulnerability types for assets of JOP Corp</li>
+              <li>Perform assessment of vulnerabilities in accordance with ISO 27005</li>
+              <li>Create recommendations for top management about IT security protection for vulnerabilities</li>
+            </ul>
+            <br><strong>Scale:</strong> No Significance (0) · Low Significance (1–2) · Medium Significance (3–4) · High Significance (5). Criteria mark set at 3.
+          </div>
 
-        <!-- ASSETS -->
-        <div class="subsection">
-          <h4>Phase 1 — Asset identification &amp; classification (21 assets)</h4>
-          <p style="font-size:13px;color:var(--ink-muted);margin-bottom:0.75rem;">Assets were classified by type, owner, size, cost, and intangible value. The six highest-priority assets (mark ≥ 6 on a 1–10 scale) were escalated for mandatory protection.</p>
-          <div class="table-scroll">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Type</th>
-                  <th>Owner</th>
-                  <th>Mark</th>
-                  <th>Priority</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Server Room</td>
-                  <td>Physical</td>
-                  <td>System Administrator</td>
-                  <td><strong>8</strong></td>
-                  <td><span class="badge badge-high">Critical</span></td>
-                </tr>
-                <tr>
-                  <td>Backup Server Room</td>
-                  <td>Physical</td>
-                  <td>System Administrator</td>
-                  <td><strong>8</strong></td>
-                  <td><span class="badge badge-high">Critical</span></td>
-                </tr>
-                <tr>
-                  <td>IT Servers</td>
-                  <td>Physical</td>
-                  <td>Network Manager</td>
-                  <td><strong>7</strong></td>
-                  <td><span class="badge badge-high">Critical</span></td>
-                </tr>
-                <tr>
-                  <td>Digital Records (Databases)</td>
-                  <td>Physical</td>
-                  <td>Head of IT Department</td>
-                  <td><strong>7</strong></td>
-                  <td><span class="badge badge-high">Critical</span></td>
-                </tr>
-                <tr>
-                  <td>Networking Equipment</td>
-                  <td>Physical</td>
-                  <td>Network Manager</td>
-                  <td><strong>7</strong></td>
-                  <td><span class="badge badge-high">Critical</span></td>
-                </tr>
-                <tr>
-                  <td>Cloud Services</td>
-                  <td>Intangible</td>
-                  <td>CISO</td>
-                  <td><strong>6</strong></td>
-                  <td><span class="badge badge-med">High</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="phase-btn" onclick="togglePhase(this)">
+            <span class="phase-num">PHASE 3</span>
+            <span class="phase-title">Threats identification and assessment</span>
+            <span class="phase-arrow">▶</span>
           </div>
-        </div>
+          <div class="phase-body">
+            <strong>Goal:</strong> Define list of threats for JOP Corp vulnerabilities and perform assessment procedures.<br><br>
+            <strong>Threat categories used:</strong><ul>
+              <li>Organizational threats</li><li>Compromise of functions or services</li>
+              <li>Human Actions</li><li>Technical Failures</li>
+              <li>Infrastructure Failures</li><li>Natural threats</li><li>Physical threats</li>
+            </ul>
+            <br><strong>Threat origin:</strong> A = Accidental (human actions that can accidentally damage assets) · D = Deliberate (actions aimed at assets) · E = Environmental (not caused by human actions)<br><br>
+            <strong>Scale:</strong> Very Small (1) · Small (2) · Medium (3) · High (4) · Very High (5). Criteria mark set at 3.
+          </div>
 
-        <!-- VULNERABILITIES -->
-        <div class="subsection">
-          <h4>Phase 2 — Vulnerability identification &amp; assessment</h4>
-          <p style="font-size:13px;color:var(--ink-muted);margin-bottom:0.75rem;">CVEs and organizational weaknesses were mapped to each priority asset using penetration testing, network-based scans, and database scan methodologies.</p>
-          <div class="table-scroll">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Key Vulnerabilities</th>
-                  <th>Type</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>IT Servers</td>
-                  <td>DoS, SQL Injection, CVE-2023-25928 (XSS)</td>
-                  <td>Software</td>
-                  <td><span class="badge badge-med">4 / 5</span></td>
-                </tr>
-                <tr>
-                  <td>Databases</td>
-                  <td>CVE-2022-46763 (SQL Injection in stored function)</td>
-                  <td>Software</td>
-                  <td><span class="badge badge-med">4 / 5</span></td>
-                </tr>
-                <tr>
-                  <td>Networking Equipment</td>
-                  <td>CVE-2018-0101 (RCE), CVE-2021-1414 (Privilege Escalation)</td>
-                  <td>Software</td>
-                  <td><span class="badge badge-low">2 / 5</span></td>
-                </tr>
-                <tr>
-                  <td>Server Room</td>
-                  <td>Lack of monitoring, social engineering, unauthorized hardware access</td>
-                  <td>Org / Personnel / Hardware</td>
-                  <td><span class="badge badge-high">5 / 5</span></td>
-                </tr>
-                <tr>
-                  <td>Backup Server Room</td>
-                  <td>Social engineering, inadequate physical protection</td>
-                  <td>Org / Personnel / Site</td>
-                  <td><span class="badge badge-high">5 / 5</span></td>
-                </tr>
-                <tr>
-                  <td>Cloud Services</td>
-                  <td>Misconfiguration, data loss, vulnerable access management &amp; API</td>
-                  <td>Software / Org</td>
-                  <td><span class="badge badge-high">5 / 5</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="phase-btn" onclick="togglePhase(this)">
+            <span class="phase-num">PHASE 4</span>
+            <span class="phase-title">Risks and residual risks identification and assessment</span>
+            <span class="phase-arrow">▶</span>
           </div>
-        </div>
+          <div class="phase-body">
+            <strong>Goal:</strong> Define the level of risks and residual risks and perform identification and assessment procedures.<br><br>
+            <strong>Method:</strong> Risk Mark = Likelihood × Business Impact (Severity), calculated using a 5×5 risk matrix.<br><br>
+            <strong>Likelihood scale:</strong> Rare (1) · Unlikely (2) · Possible (3) · Likely (4) · Certain (5)<br>
+            <strong>Business Impact scale:</strong> Insignificant (1) · Minor (2) · Moderate (3) · Major (4) · Very Significant (5)<br><br>
+            Risk score ranges from 1 (Very Low) to 25 (Very High).
+          </div>
 
-        <!-- RISK MATRIX -->
-        <div class="subsection">
-          <h4>Phase 3 &amp; 4 — Threat assessment &amp; risk quantification</h4>
-          <p style="font-size:13px;color:var(--ink-muted);margin-bottom:1rem;">Risk scores were calculated using a 5×5 matrix (Likelihood × Business Impact). Assets scoring ≥ 6 were escalated for mandatory treatment.</p>
-          <div class="risk-matrix-wrap">
-            <div>
-              <div class="risk-matrix" aria-label="5x5 risk matrix">
-                <!-- axis label -->
-                <div class="rm-axis-label">Likelihood →</div>
-                <!-- row 5 (top = highest likelihood) -->
-                <div class="rm-cell rm-yellow">5</div><div class="rm-cell rm-yellow">10</div><div class="rm-cell rm-red">15</div><div class="rm-cell rm-red">20</div><div class="rm-cell rm-red">25</div>
-                <!-- row 4 -->
-                <div class="rm-cell rm-yellow">4</div><div class="rm-cell rm-yellow">8</div><div class="rm-cell rm-yellow">12</div><div class="rm-cell rm-red">16</div><div class="rm-cell rm-red">20</div>
-                <!-- row 3 -->
-                <div class="rm-cell rm-green">3</div><div class="rm-cell rm-yellow">6</div><div class="rm-cell rm-yellow">9</div><div class="rm-cell rm-yellow">12</div><div class="rm-cell rm-red">15</div>
-                <!-- row 2 -->
-                <div class="rm-cell rm-green">2</div><div class="rm-cell rm-green">4</div><div class="rm-cell rm-yellow">6</div><div class="rm-cell rm-yellow">8</div><div class="rm-cell rm-yellow">10</div>
-                <!-- row 1 -->
-                <div class="rm-cell rm-green">1</div><div class="rm-cell rm-green">2</div><div class="rm-cell rm-green">3</div><div class="rm-cell rm-green">4</div><div class="rm-cell rm-yellow">5</div>
-                <!-- bottom axis: severity labels -->
-                <div class="rm-label"></div>
-                <div class="rm-label">1</div><div class="rm-label">2</div><div class="rm-label">3</div><div class="rm-label">4</div><div class="rm-label">5</div>
-              </div>
-              <p style="font-size:11px;color:var(--ink-faint);margin-top:6px;text-align:center;">← Severity (Business Impact)</p>
-            </div>
-            <div class="risk-findings">
-              <div class="finding-row">
-                <span class="finding-score">10</span>
-                <div>
-                  <span class="badge badge-med">Medium</span>
-                  <span class="finding-label"> — IT Servers</span><br>
-                  <span style="font-size:12px;color:var(--ink-faint);">Unlikely × Very Significant</span>
-                </div>
-              </div>
-              <div class="finding-row">
-                <span class="finding-score">8</span>
-                <div>
-                  <span class="badge badge-med">Medium</span>
-                  <span class="finding-label"> — Databases</span><br>
-                  <span style="font-size:12px;color:var(--ink-faint);">Unlikely × Major</span>
-                </div>
-              </div>
-              <div class="finding-row">
-                <span class="finding-score">5</span>
-                <div>
-                  <span class="badge badge-low">Low</span>
-                  <span class="finding-label"> — Server Room</span><br>
-                  <span style="font-size:12px;color:var(--ink-faint);">Rare × Very Significant</span>
-                </div>
-              </div>
-              <div class="finding-row">
-                <span class="finding-score">3</span>
-                <div>
-                  <span class="badge badge-low">Low</span>
-                  <span class="finding-label"> — Cloud Services</span><br>
-                  <span style="font-size:12px;color:var(--ink-faint);">Rare × Moderate</span>
-                </div>
-              </div>
-            </div>
+          <div class="phase-btn" onclick="togglePhase(this)">
+            <span class="phase-num">PHASE 5</span>
+            <span class="phase-title">Controls select and implementation</span>
+            <span class="phase-arrow">▶</span>
           </div>
-        </div>
-
-        <!-- CONTROLS -->
-        <div class="subsection">
-          <h4>Phase 5 — Control selection &amp; treatment (ISO 27001 Annex A)</h4>
-          <p style="font-size:13px;color:var(--ink-muted);margin-bottom:0.75rem;">Medium-risk assets received mandatory treatment. Controls were selected from ISO 27001 Annex A and mapped to owners in the Information Security Department.</p>
-          <div class="controls-grid">
-            <div class="control-item">
-              <code>A.10.1.1 / A.10.1.2</code>
-              <p>Encryption policy for IT server communications (SSL/TLS implementation)</p>
-            </div>
-            <div class="control-item">
-              <code>A.12.3.1</code>
-              <p>Information backup — off-site or remote storage for database resilience</p>
-            </div>
-            <div class="control-item">
-              <code>A.12.4.1–4.4</code>
-              <p>Event logging, log protection, admin/operator logs, clock synchronisation</p>
-            </div>
-            <div class="control-item">
-              <code>A.11.1.1–1.5</code>
-              <p>Physical security perimeter controls for server rooms (access, monitoring)</p>
-            </div>
-            <div class="control-item">
-              <code>A.9.1.2 / A.9.2.2</code>
-              <p>Access to networks and network services; user access provisioning</p>
-            </div>
-            <div class="control-item">
-              <code>A.13.2.1</code>
-              <p>Information transfer policies and procedures for cloud environments</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- KEY FINDINGS -->
-        <div class="subsection">
-          <h4>Key findings &amp; recommendations to management</h4>
-          <div class="finding-block">
-            <div class="bar"></div>
-            <div class="content">
-              <h5>IT Servers require priority hardening</h5>
-              <p>Staff training on IT policies and SSL/TLS deployment were identified as the most impactful immediate treatments for the highest-scoring risk asset (mark 10/25).</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar"></div>
-            <div class="content">
-              <h5>Database security demands off-site backups and patching</h5>
-              <p>CVE-2022-46763 (SQL injection via stored function) requires both a new patch deployment and segregated off-site backup strategy to satisfy A.12.3.1 and A.12.4.x.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar"></div>
-            <div class="content">
-              <h5>Physical controls are the overlooked gap</h5>
-              <p>Server Room and Backup Server Room each scored 5/5 on vulnerability severity but low on likelihood. Annex A.11.1 physical controls should be implemented pre-emptively given the catastrophic potential business impact.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar"></div>
-            <div class="content">
-              <h5>Management review cycle needed</h5>
-              <p>Recommended a continuous review process covering residual risk status, legislative changes, and new asset onboarding — particularly relevant given the company's aviation tech expansion roadmap.</p>
-            </div>
+          <div class="phase-body">
+            <strong>Goal:</strong> Define the implementation and control measurements for defined risks.<br><br>
+            <strong>Tasks:</strong><ul>
+              <li>Perform implementation of risks in accordance with ISO 31000 (27001) and ISO 22301</li>
+              <li>Create a list of recommendations for top management about risks control for IT security protection</li>
+            </ul>
+            <br><strong>Standards applied:</strong> ISO/IEC 27001:2013 (Annex A controls) · ISO/IEC 31000:2018 (risk treatment) · ISO/IEC 22301:2012 (business continuity)
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- PROJECT 2 -->
-  <section id="project-2">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2>Boeing Information Security Policy — Critical Analysis</h2>
-    </div>
-    <div class="project-card">
-      <div class="project-card-header">
-        <div class="project-card-header-left">
-          <h3>Boeing's IS Policy: Securing Airline Information on Ground and in Air</h3>
-          <p>Course: Information Security Laws &amp; Regulations &nbsp;·&nbsp; ITMO University, 2023</p>
-        </div>
-        <div class="project-tags">
-          <span class="tag">ISO 27001</span>
-          <span class="tag">ISO 27002</span>
-          <span class="tag">DMARC / Email Security</span>
-          <span class="tag">Supply Chain Risk</span>
-          <span class="tag">Policy Analysis</span>
-        </div>
+<!-- ── PHASE 1: ASSETS ── -->
+<div class="sec reveal" id="assets">
+  <div class="sec-hd"><span class="sec-tag">Phase 1</span><h2>Assets identification &amp; assessment</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div>
+        <h3>Table 1.1 — Initial assets identification (all 21 assets)</h3>
+        <p>JOP Corp · Imaginary flight school with technological operations · Headquarters: St. Petersburg</p>
       </div>
-      <div class="project-body">
-        <p>This essay critically evaluated Boeing's information security policy framework for protecting airline data in both ground and airborne environments. The analysis benchmarked the policy against ISO/IEC 27001:2013 and ISO/IEC 27002:2013, identifying both strengths and material gaps with actionable improvement recommendations.</p>
-
-        <div class="subsection">
-          <h4>Policy strengths — what Boeing gets right</h4>
-          <div class="finding-block">
-            <div class="bar" style="background:#2d6a4f;"></div>
-            <div class="content">
-              <h5>Alignment with ISO 27001 scope and risk identification</h5>
-              <p>The policy correctly identifies risks to information assets and defines the ISMS scope in line with Clause 4 of ISO 27001, providing a structured management foundation.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar" style="background:#2d6a4f;"></div>
-            <div class="content">
-              <h5>Broad coverage across core security domains</h5>
-              <p>Data classification, access control, incident management, staff training, encryption requirements, and secure communication channels are all addressed — reflecting the ISO 27002 control domains.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar" style="background:#2d6a4f;"></div>
-            <div class="content">
-              <h5>24/7 global ethics line</h5>
-              <p>A third-party managed, always-on ethics and incident reporting line available across 35 countries demonstrates commitment to operational security beyond technical controls.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="subsection">
-          <h4>Critical gaps &amp; vulnerabilities identified</h4>
-          <div class="finding-block">
-            <div class="bar" style="background:#991b1b;"></div>
-            <div class="content">
-              <h5>Test development networks publicly exposed</h5>
-              <p>Despite a stated requirement to encrypt all data, Boeing's test development networks were publicly reachable via the internet — potentially exposing software source code and build systems to sophisticated adversaries. This is a direct contradiction of the policy's own encryption mandate.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar" style="background:#991b1b;"></div>
-            <div class="content">
-              <h5>Email infrastructure compromised — no DMARC enforcement</h5>
-              <p>An email server was found infected with multiple malware strains. Critically, the boeing.com domain lacked DMARC (Domain-based Message Authentication, Reporting and Conformance), leaving employees, suppliers, and government clients vulnerable to email spoofing and targeted phishing campaigns.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar" style="background:#b45309;"></div>
-            <div class="content">
-              <h5>No third-party vendor security policy</h5>
-              <p>The ethics line is managed entirely by an external party, yet the policy contains no documented procedure for managing incidents involving third-party vendors or partners — a significant supply chain security gap given Boeing's extensive contractor ecosystem.</p>
-            </div>
-          </div>
-          <div class="finding-block">
-            <div class="bar" style="background:#b45309;"></div>
-            <div class="content">
-              <h5>Training programme lacks specificity</h5>
-              <p>While employee training is acknowledged, the policy fails to specify the type, target audience, frequency, or content of required training — making compliance measurement and effectiveness evaluation impossible.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="subsection">
-          <h4>Recommendations</h4>
-          <div class="controls-grid">
-            <div class="control-item">
-              <code>Network Segmentation</code>
-              <p>Isolate test/dev networks from public internet exposure using air-gapping or strict perimeter controls.</p>
-            </div>
-            <div class="control-item">
-              <code>DMARC / DKIM / SPF</code>
-              <p>Deploy full email authentication stack on boeing.com to prevent domain spoofing and protect all downstream email recipients.</p>
-            </div>
-            <div class="control-item">
-              <code>Vendor Risk Programme</code>
-              <p>Formalize a third-party security policy covering incident response, contractual obligations, and regular audits.</p>
-            </div>
-            <div class="control-item">
-              <code>Training Framework</code>
-              <p>Define role-based training curricula, delivery cadence, and measurable completion criteria aligned to ISO 27002 §6.3.</p>
-            </div>
-          </div>
-        </div>
+      <div class="tags">
+        <span class="tag">ISO 27001</span><span class="tag">ISO 31000</span><span class="tag">Asset Register</span>
       </div>
     </div>
-  </section>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Asset name</th><th>Location</th><th>Characteristics</th><th>Technics</th><th>Scope</th><th>Boundaries</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>JOP Corp Mobile Application (iOS &amp; Android) Code</td><td>Headquarters</td><td>iOS and Android application codes</td><td>Documentation</td><td>Critical Information</td><td>Inside the Company</td></tr>
+            <tr><td>2</td><td>IT Servers</td><td>Headquarters</td><td>Stores, sends, and receives data (e.g. code)</td><td>Ubuntu Linux</td><td>Fixed Hardware</td><td>Third Party Organisation</td></tr>
+            <tr><td>3</td><td>Firewalls</td><td>All Office Branches</td><td>Provides various protection levels</td><td>Cisco</td><td>Fixed Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>4</td><td>Digital Records (Databases)</td><td>Headquarters</td><td>Stores Data</td><td>Oracle</td><td>Fixed Hardware</td><td>Third Party Organisation</td></tr>
+            <tr><td>5</td><td>Computers</td><td>All Offices</td><td>Essential equipment for business processes</td><td>iOS</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>6</td><td>Aircrafts</td><td>Designated Training Campuses</td><td>Critical machine with ability to fly</td><td>Cessna</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>7</td><td>Aircraft Operators</td><td>Designated Training Campuses</td><td>Any legal person operating or proposing to operate aircraft or aerodrome</td><td>Physical</td><td>Transportable</td><td>Inside the Company</td></tr>
+            <tr><td>8</td><td>Unmanned Aircraft</td><td>Training Campuses</td><td>Critical machine with ability to fly</td><td>Northrop Grumman Corporation</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>9</td><td>JOP Corp Patent</td><td>Headquarters</td><td>Data of inventions not yet made public</td><td>Documentation</td><td>Legal Information</td><td>Inside the Company</td></tr>
+            <tr><td>10</td><td>JOP Corp License and Permits</td><td>Headquarters</td><td>Official permission/permit to use or own aircraft or other equipment</td><td>Documentation</td><td>Legal Information</td><td>Inside the Company</td></tr>
+            <tr><td>11</td><td>IoT Devices</td><td>Training Campuses</td><td>Equipment with sensors</td><td>IBM</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>12</td><td>JOP Corp Website Code</td><td>Web Servers</td><td>Web application code</td><td>Documentation</td><td>Critical Information</td><td>Inside the Company</td></tr>
+            <tr><td>13</td><td>Communication Devices</td><td>All Office Branches</td><td>Equipment with communication capabilities</td><td>Becker Avionics</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>14</td><td>JOP Corp Internal Regulations</td><td>All Office Branches</td><td>Standard Operating Procedures documentation</td><td>Documentation</td><td>Critical Information</td><td>Inside the Company</td></tr>
+            <tr><td>15</td><td>Web Server</td><td>Headquarters</td><td>To deploy web application solutions</td><td>Ubuntu Linux</td><td>Fixed Hardware</td><td>Third-Party Organisation</td></tr>
+            <tr><td>16</td><td>Networking Equipment (Routers, Hubs, Switches, Bridges)</td><td>All Office Branches</td><td>Connects and enables data transfer to all network devices</td><td>Cisco</td><td>Transportable Hardware</td><td>Inside Company</td></tr>
+            <tr><td>17</td><td>Laptops</td><td>All Office Branches</td><td>High-capability critical equipment</td><td>Windows</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>18</td><td>Virtual Machines (Flight Simulators)</td><td>All Office Branches</td><td>Critical equipment with simulating capabilities</td><td>CAE Inc.</td><td>Transportable Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>19</td><td>Server Room</td><td>Headquarters</td><td>Central point for managing network server resources</td><td>Verizon</td><td>Fixed Hardware</td><td>Third-Party Organisation</td></tr>
+            <tr><td>20</td><td>Backup Server Room</td><td>Headquarters</td><td>Replicated centre for managing network server resources</td><td>Verizon</td><td>Fixed Hardware</td><td>Inside the Company</td></tr>
+            <tr><td>21</td><td>Cloud Services</td><td>Headquarters</td><td>Cloud infrastructure and services</td><td>Amazon AWS</td><td>Fixed Hardware</td><td>Third-Party Organisation</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <h2>Skills demonstrated</h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-pill">Risk Assessment<span>ISO 27005 methodology</span></div>
-      <div class="skill-pill">Asset Management<span>Classification &amp; ownership</span></div>
-      <div class="skill-pill">Threat Modeling<span>CVE mapping, threat origin</span></div>
-      <div class="skill-pill">Control Selection<span>ISO 27001 Annex A</span></div>
-      <div class="skill-pill">Risk Quantification<span>5×5 matrix analysis</span></div>
-      <div class="skill-pill">Vulnerability Analysis<span>Pen-test / scan strategy</span></div>
-      <div class="skill-pill">Policy Analysis<span>Gap assessment vs. ISO</span></div>
-      <div class="skill-pill">ISMS Design<span>End-to-end lifecycle</span></div>
-      <div class="skill-pill">BCP / Resilience<span>ISO 22301 awareness</span></div>
-      <div class="skill-pill">Email Security<span>DMARC / DKIM / SPF</span></div>
-      <div class="skill-pill">Supply Chain Risk<span>Vendor security review</span></div>
-      <div class="skill-pill">Technical Writing<span>Management-ready reports</span></div>
-    </div>
-  </section>
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 1.2 — Assets by type and owner</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Asset name</th><th>Asset type</th><th>Asset owner</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>JOP Corp Mobile Application (iOS &amp; Android) Code</td><td><span class="b b-blue">Intangible</span></td><td>Head / Director of IT Department</td></tr>
+              <tr><td>2</td><td>IT Servers</td><td><span class="b b-gray">Physical</span></td><td>Network Manager</td></tr>
+              <tr><td>3</td><td>Firewalls</td><td><span class="b b-gray">Physical</span></td><td>Network Manager</td></tr>
+              <tr><td>4</td><td>Digital Records (Databases)</td><td><span class="b b-gray">Physical</span></td><td>Head / Director of IT Department</td></tr>
+              <tr><td>5</td><td>Computers</td><td><span class="b b-gray">Physical</span></td><td>IT Department</td></tr>
+              <tr><td>6</td><td>Aircrafts</td><td><span class="b b-gray">Physical</span></td><td>Pilot</td></tr>
+              <tr><td>7</td><td>Aircraft Operators</td><td><span class="b b-gray">Tangible</span></td><td>Head of HR Department</td></tr>
+              <tr><td>8</td><td>Unmanned Aircraft</td><td><span class="b b-gray">Physical</span></td><td>Pilot</td></tr>
+              <tr><td>9</td><td>JOP Corp Patent</td><td><span class="b b-blue">Intangible</span></td><td>Legal Department</td></tr>
+              <tr><td>10</td><td>JOP Corp License and Permits</td><td><span class="b b-blue">Intangible</span></td><td>Legal Department</td></tr>
+              <tr><td>11</td><td>IoT Devices</td><td><span class="b b-gray">Physical</span></td><td>IT Department</td></tr>
+              <tr><td>12</td><td>JOP Corp Website Code</td><td><span class="b b-blue">Intangible</span></td><td>Head / Director of IT Department</td></tr>
+              <tr><td>13</td><td>Communication Devices</td><td><span class="b b-gray">Physical</span></td><td>Network Manager</td></tr>
+              <tr><td>14</td><td>JOP Corp Internal Regulations</td><td><span class="b b-blue">Intangible</span></td><td>Head of HR Department</td></tr>
+              <tr><td>15</td><td>Web Server</td><td><span class="b b-gray">Physical</span></td><td>Network Manager</td></tr>
+              <tr><td>16</td><td>Networking Equipment</td><td><span class="b b-gray">Physical</span></td><td>Network Manager</td></tr>
+              <tr><td>17</td><td>Laptops</td><td><span class="b b-gray">Physical</span></td><td>IT Department</td></tr>
+              <tr><td>18</td><td>Virtual Machines (Flight Simulators)</td><td><span class="b b-gray">Physical</span></td><td>Head of Simulation Department</td></tr>
+              <tr><td>19</td><td>Server Room</td><td><span class="b b-gray">Physical</span></td><td>System Administrator</td></tr>
+              <tr><td>20</td><td>Backup Server Room</td><td><span class="b b-gray">Physical</span></td><td>System Administrator</td></tr>
+              <tr><td>21</td><td>Cloud Services</td><td><span class="b b-blue">Intangible</span></td><td>Chief Information Security Officer</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-</main>
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 1.3 — Asset assessment by size, cost &amp; marks</div>
+        <p class="tbl-note">Criteria mark set at 5. Assets with mark &gt; 5 are escalated ("Decision: No" = requires mandatory protection).</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Asset name</th><th>Size</th><th>Tangible cost</th><th>Intangible level</th><th>Mark</th><th>Decision</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>JOP Corp Mobile Application Code</td><td>Big</td><td>Intangible Value</td><td>Very High</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>2</td><td>IT Servers</td><td>Very Big</td><td>High</td><td>Medium</td><td><strong>7</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+              <tr><td>3</td><td>Firewalls</td><td>Big</td><td>High</td><td>Medium</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>4</td><td>Digital Records (Databases)</td><td>Very Big</td><td>High</td><td>Medium</td><td><strong>7</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+              <tr><td>5</td><td>Computers</td><td>Middle</td><td>Medium</td><td>Low</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>6</td><td>Aircrafts</td><td>Very Big</td><td>High</td><td>Medium</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>7</td><td>Aircraft Operators</td><td>Middle</td><td>High</td><td>Medium</td><td><strong>3</strong></td><td><span class="b b-gray">Excluded</span></td></tr>
+              <tr><td>8</td><td>Unmanned Aircraft</td><td>Middle</td><td>High</td><td>Medium</td><td><strong>6</strong></td><td><span class="b b-amber">Review</span></td></tr>
+              <tr><td>9</td><td>JOP Corp Patent</td><td>Small</td><td>Intangible Value</td><td>Very High</td><td><strong>3</strong></td><td><span class="b b-gray">Excluded</span></td></tr>
+              <tr><td>10</td><td>JOP Corp License and Permits</td><td>Small</td><td>Medium</td><td>Very High</td><td><strong>3</strong></td><td><span class="b b-gray">Excluded</span></td></tr>
+              <tr><td>11</td><td>IoT Devices</td><td>Middle</td><td>High</td><td>Medium</td><td><strong>5</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>12</td><td>JOP Corp Website Code</td><td>Big</td><td>Intangible Value</td><td>Very High</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>13</td><td>Communication Devices</td><td>Middle</td><td>Medium</td><td>Medium</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>14</td><td>JOP Corp Internal Regulations</td><td>Small</td><td>Intangible Value</td><td>High</td><td><strong>3</strong></td><td><span class="b b-gray">Excluded</span></td></tr>
+              <tr><td>15</td><td>Web Server</td><td>Big</td><td>High</td><td>Medium</td><td><strong>5</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>16</td><td>Networking Equipment</td><td>Big</td><td>High</td><td>Medium</td><td><strong>7</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+              <tr><td>17</td><td>Laptops</td><td>Middle</td><td>Medium</td><td>Medium</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>18</td><td>Virtual Machines (Flight Simulators)</td><td>Big</td><td>Very High</td><td>Medium</td><td><strong>4</strong></td><td><span class="b b-green">Yes</span></td></tr>
+              <tr><td>19</td><td>Server Room</td><td>Very Big</td><td>High</td><td>Medium</td><td><strong>8</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+              <tr><td>20</td><td>Backup Server Room</td><td>Very Big</td><td>High</td><td>Medium</td><td><strong>8</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+              <tr><td>21</td><td>Cloud Services</td><td>Very Big</td><td>High</td><td>Very High</td><td><strong>6</strong></td><td><span class="b b-red">No — Protect</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 1.4 &amp; 1.5 — Final recommendation list (escalated assets only)</div>
+        <p class="tbl-note">"Decision (Protect): No" = asset mark exceeds criteria mark, therefore mandatory controls apply. "Decision (Applicable): Yes" = controls are applicable and must be implemented.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Asset</th><th>Mark</th><th>Criteria</th><th>Protect</th><th>Controls</th><th>Applicable</th><th>Responsible</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>IT Servers</td><td><strong>7</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.6.1.2, A.9.1.1, A.9.2.3</code></td><td><span class="b b-green">Yes</span></td><td>Network Manager</td></tr>
+              <tr><td>2</td><td>Digital Records (Databases)</td><td><strong>7</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.9.2.3, A.9.4.2</code></td><td><span class="b b-green">Yes</span></td><td>Head / Director of IT Dept.</td></tr>
+              <tr><td>3</td><td>Networking Equipment</td><td><strong>7</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.9.1.2, A.13.1.3, A.13.2.1</code></td><td><span class="b b-green">Yes</span></td><td>System Administrator</td></tr>
+              <tr><td>4</td><td>Server Room</td><td><strong>8</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.11.1.1, A.11.1.2, A.11.1.3, A.11.1.4, A.11.1.5</code></td><td><span class="b b-green">Yes</span></td><td>Network Manager</td></tr>
+              <tr><td>5</td><td>Backup Server Room</td><td><strong>8</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.11.1.1, A.11.1.2, A.11.1.3, A.11.1.4, A.11.1.5</code></td><td><span class="b b-green">Yes</span></td><td>Network Manager</td></tr>
+              <tr><td>6</td><td>Cloud Services</td><td><strong>6</strong></td><td>5</td><td><span class="b b-red">No</span></td><td><code>A.9.1.2, A.9.2.2, A.13.2.1</code></td><td><span class="b b-green">Yes</span></td><td>Network Manager</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHASE 2: VULNERABILITIES ── -->
+<div class="sec reveal" id="vulns">
+  <div class="sec-hd"><span class="sec-tag">Phase 2</span><h2>Vulnerabilities identification &amp; assessment</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div><h3>Table 2.1 &amp; 2.2 — Vulnerabilities by asset, type, method, and score</h3><p>Scoped to the 6 highest-priority assets from Phase 1 · ISO 27005 · Criteria mark: 3</p></div>
+      <div class="tags"><span class="tag">ISO 27005</span><span class="tag">CVE Analysis</span><span class="tag">Penetration Testing</span></div>
+    </div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Asset</th><th>Vulnerability</th><th>Type</th><th>Assessment method</th><th>Additional activities</th><th>Score</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td><td>IT Servers</td>
+              <td>DoS Attacks, SQL Injection, Directory Attacks, System Configuration Attacks<br><em style="color:var(--navy3)">CVE-2023-25928 — Cross-site scripting vulnerability</em></td>
+              <td>Software</td><td>Penetration testing</td><td>Questionnaires</td>
+              <td><span class="b b-amber">4 / 5</span></td>
+            </tr>
+            <tr>
+              <td>2</td><td>Digital Records (Databases)</td>
+              <td>CVE-2022-46763 — SQL injection issue in a database stored function</td>
+              <td>Software</td><td>Database scans</td><td>High-quality audit-ready reporting</td>
+              <td><span class="b b-amber">4 / 5</span></td>
+            </tr>
+            <tr>
+              <td>3</td><td>Networking Equipment</td>
+              <td>CVE-2018-0101 — Remote code execution and escalating privileges<br><em style="color:var(--navy3)">CVE-2021-1414 — Elevated privileges in web-based management interface</em></td>
+              <td>Software</td><td>Network-based scans</td><td>Keeping Firewall Security Rules up to date</td>
+              <td><span class="b b-green">2 / 5</span></td>
+            </tr>
+            <tr>
+              <td>4</td><td>Server Room</td>
+              <td>Lack of monitoring mechanisms · Social engineering attacks · Unauthorized hardware access · Insufficient control of off-premises assets</td>
+              <td>Organization / Personnel / Hardware</td><td>Network-based scans, Database scans</td><td>—</td>
+              <td><span class="b b-red">5 / 5</span></td>
+            </tr>
+            <tr>
+              <td>5</td><td>Backup Server Room</td>
+              <td>Lack of monitoring mechanisms · Social engineering attacks · Inadequate physical protection of the building, doors and windows</td>
+              <td>Organization / Personnel / Site</td><td>Network-based scans</td><td>High-quality audit-ready reporting</td>
+              <td><span class="b b-red">5 / 5</span></td>
+            </tr>
+            <tr>
+              <td>6</td><td>Cloud Services</td>
+              <td>Misconfiguration · Data loss or theft · Non-compliance · Vulnerable access management · API vulnerabilities</td>
+              <td>Software / Organization</td><td>Network and wireless assessment</td><td>Security Scanning</td>
+              <td><span class="b b-red">5 / 5</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 2.3 — Vulnerability recommendation list</div>
+        <p class="tbl-note">Assets with vulnerability mark ≥ criteria mark (3) are recommended for protection. Networking Equipment (score 2) was excluded.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Asset</th><th>Vuln. mark</th><th>Criteria</th><th>Protect</th><th>Applicable</th><th>Responsible</th></tr></thead>
+            <tbody>
+              <tr><td>IT Servers</td><td><strong>4</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Digital Records (Databases)</td><td><strong>4</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Networking Equipment</td><td><strong>2</strong></td><td>3</td><td><span class="b b-green">Yes</span></td><td><span class="b b-red">No</span></td><td>Information Security Department</td></tr>
+              <tr><td>Server Room</td><td><strong>5</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Backup Server Room</td><td><strong>5</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Cloud Services</td><td><strong>5</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHASE 3: THREATS ── -->
+<div class="sec reveal" id="threats">
+  <div class="sec-hd"><span class="sec-tag">Phase 3</span><h2>Threats identification &amp; assessment</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div><h3>Table 3.2 &amp; 3.3 — Threats by asset, type, origin, and mark</h3><p>ISO 27005 · Criteria mark: 3 · Origin: A = Accidental · D = Deliberate · E = Environmental</p></div>
+      <div class="tags"><span class="tag">ISO 27005</span><span class="tag">Threat Modeling</span><span class="tag">Human Actions</span></div>
+    </div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Asset</th><th>Vulnerability</th><th>Threat</th><th>Threat type</th><th>Origin</th><th>Mark</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td><td>IT Servers</td>
+              <td>DoS, SQL Injection, Directory Attacks, CVE-2023-25928</td>
+              <td>Saturation of the Information System · Failure of the server · Tampering with software and hardware</td>
+              <td>Technical Failures / Human Actions</td>
+              <td><span class="b b-blue">A, D</span></td>
+              <td><strong>4</strong></td>
+            </tr>
+            <tr>
+              <td>2</td><td>Digital Records (Databases)</td>
+              <td>CVE-2022-46763</td>
+              <td>Data input from untrusted sources · Unauthorized use of personal data</td>
+              <td>Human Actions</td>
+              <td><span class="b b-blue">A, D</span></td>
+              <td><strong>4</strong></td>
+            </tr>
+            <tr>
+              <td>3</td><td>Server Room</td>
+              <td>Lack of monitoring, social engineering, unauthorized hardware access, insufficient off-premises control</td>
+              <td>Social Engineering · Theft of Equipment · Tampering with Hardware</td>
+              <td>Technical Failure / Human Actions</td>
+              <td><span class="b b-red">D</span></td>
+              <td><strong>5</strong></td>
+            </tr>
+            <tr>
+              <td>4</td><td>Backup Server Room</td>
+              <td>Lack of monitoring, social engineering, inadequate physical protection</td>
+              <td>Social Engineering · Theft of Equipment · Tampering with Hardware</td>
+              <td>Technical Failure / Human Actions</td>
+              <td><span class="b b-red">D</span></td>
+              <td><strong>2</strong></td>
+            </tr>
+            <tr>
+              <td>5</td><td>Cloud Services</td>
+              <td>Misconfiguration, data loss, non-compliance, vulnerable access management, API</td>
+              <td>Failure of service providers</td>
+              <td>Organisational Threat</td>
+              <td><span class="b b-green">A, E</span></td>
+              <td><strong>4</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 3.4 — Threat recommendation list</div>
+        <p class="tbl-note">Assets with threat mark ≥ criteria mark (3) are recommended for protection. Backup Server Room (score 2) was excluded at this stage.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Asset</th><th>Threat</th><th>Threat mark</th><th>Criteria</th><th>Protect</th><th>Applicable</th><th>Responsible</th></tr></thead>
+            <tbody>
+              <tr><td>IT Servers</td><td>Saturation of IS · Server failure · SW/HW tampering</td><td><strong>4</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Digital Records (Databases)</td><td>Untrusted data input · Unauthorized personal data use</td><td><strong>4</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Server Room</td><td>Social Engineering · Equipment Theft · HW Tampering</td><td><strong>5</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+              <tr><td>Backup Server Room</td><td>Social Engineering · Equipment Theft · HW Tampering</td><td><strong>2</strong></td><td>3</td><td><span class="b b-green">Yes</span></td><td><span class="b b-red">No</span></td><td>Information Security Department</td></tr>
+              <tr><td>Cloud Services</td><td>Failure of service providers</td><td><strong>4</strong></td><td>3</td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>Information Security Department</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHASE 4: RISKS ── -->
+<div class="sec reveal" id="risks">
+  <div class="sec-hd"><span class="sec-tag">Phase 4</span><h2>Risks &amp; residual risks identification and assessment</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div><h3>Table 4.2 — Risk identification and assessment (5×5 matrix)</h3><p>Risk Mark = Likelihood × Business Impact · ISO 27005 · Range: 1 (Very Low) to 25 (Very High)</p></div>
+      <div class="tags"><span class="tag">ISO 27005</span><span class="tag">5×5 Risk Matrix</span><span class="tag">Risk Quantification</span></div>
+    </div>
+    <div class="card-body">
+      <div class="ibox" style="margin-bottom:1.25rem">
+        <strong>Risk matrix key:</strong> Green (1–5) = Low · Amber (6–12) = Medium · Red (15–25) = High/Critical<br>
+        <strong>Likelihood:</strong> Rare (1) · Unlikely (2) · Possible (3) · Likely (4) · Certain (5)<br>
+        <strong>Business Impact:</strong> Insignificant (1) · Minor (2) · Moderate (3) · Major (4) · Very Significant (5)
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Asset</th><th>Threats</th><th>Likelihood</th><th>Business Impact</th><th>Risk mark</th><th>Risk level</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td><td>IT Servers</td>
+              <td>Saturation of the Information System · Failure of the server · Tampering with software and hardware</td>
+              <td>Unlikely (2)</td><td>Very Significant (5)</td>
+              <td><strong>10</strong></td><td><span class="b b-amber">Medium</span></td>
+            </tr>
+            <tr>
+              <td>2</td><td>Digital Records (Databases)</td>
+              <td>Data input from untrusted sources · Unauthorized use of personal data</td>
+              <td>Unlikely (2)</td><td>Major (4)</td>
+              <td><strong>8</strong></td><td><span class="b b-amber">Medium</span></td>
+            </tr>
+            <tr>
+              <td>3</td><td>Server Room</td>
+              <td>Social Engineering · Theft of Equipment · Tampering with Hardware</td>
+              <td>Rare (1)</td><td>Very Significant (5)</td>
+              <td><strong>5</strong></td><td><span class="b b-green">Low</span></td>
+            </tr>
+            <tr>
+              <td>4</td><td>Cloud Services</td>
+              <td>Failure of service providers</td>
+              <td>Rare (1)</td><td>Moderate (3)</td>
+              <td><strong>3</strong></td><td><span class="b b-green">Low</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Risk score visualisation (out of 25)</div>
+        <div class="rbar-wrap" id="rbars">
+          <div class="rbar-row">
+            <span class="rbar-lbl">IT Servers</span>
+            <div class="rbar-track"><div class="rbar-fill amber" data-w="40"></div></div>
+            <span class="rbar-score"><span class="b b-amber">10 / 25</span></span>
+          </div>
+          <div class="rbar-row">
+            <span class="rbar-lbl">Digital Records (Databases)</span>
+            <div class="rbar-track"><div class="rbar-fill amber" data-w="32"></div></div>
+            <span class="rbar-score"><span class="b b-amber">8 / 25</span></span>
+          </div>
+          <div class="rbar-row">
+            <span class="rbar-lbl">Server Room</span>
+            <div class="rbar-track"><div class="rbar-fill green" data-w="20"></div></div>
+            <span class="rbar-score"><span class="b b-green">5 / 25</span></span>
+          </div>
+          <div class="rbar-row">
+            <span class="rbar-lbl">Cloud Services</span>
+            <div class="rbar-track"><div class="rbar-fill green" data-w="12"></div></div>
+            <span class="rbar-score"><span class="b b-green">3 / 25</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Table 4.3 — Risk recommendation list</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Asset</th><th>Threat</th><th>Risk level</th><th>Protect</th><th>Applicable</th><th>Responsible</th></tr></thead>
+            <tbody>
+              <tr><td>IT Servers</td><td>Saturation of IS · Server failure · SW/HW tampering</td><td><span class="b b-amber">Medium</span></td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>InfoSec Department</td></tr>
+              <tr><td>Digital Records (Databases)</td><td>Untrusted data input · Unauthorized personal data use</td><td><span class="b b-amber">Medium</span></td><td><span class="b b-red">No</span></td><td><span class="b b-green">Yes</span></td><td>InfoSec Department</td></tr>
+              <tr><td>Server Room</td><td>Social Engineering · Equipment Theft · HW Tampering</td><td><span class="b b-green">Low</span></td><td><span class="b b-green">Yes</span></td><td><span class="b b-red">No</span></td><td>InfoSec Department</td></tr>
+              <tr><td>Cloud Services</td><td>Failure of service providers</td><td><span class="b b-green">Low</span></td><td><span class="b b-green">Yes</span></td><td><span class="b b-red">No</span></td><td>InfoSec Department</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHASE 5: CONTROLS ── -->
+<div class="sec reveal" id="controls">
+  <div class="sec-hd"><span class="sec-tag">Phase 5</span><h2>Controls selection &amp; implementation</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div><h3>Table 5.2 &amp; 5.3 — Risk treatment, resources &amp; ISO 27001 Annex A controls</h3><p>Applied to Medium-risk assets only · ISO 31000 · ISO 27001 Annex A · ISO 22301</p></div>
+      <div class="tags"><span class="tag">ISO 27001</span><span class="tag">ISO 31000</span><span class="tag">ISO 22301</span><span class="tag">Annex A</span></div>
+    </div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Asset</th><th>Risk level</th><th>Risk treatment</th><th>Required resources</th><th>Control options</th><th>Responsible</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>IT Servers</td><td><span class="b b-amber">Medium</span></td>
+              <td>Training staff in IT policies and procedures · Using Secure Socket Layer (SSL) on websites</td>
+              <td>People</td>
+              <td><code>A.10.1.1, A.10.1.2</code></td>
+              <td>Information Security Department</td>
+            </tr>
+            <tr>
+              <td>Digital Records (Databases)</td><td><span class="b b-amber">Medium</span></td>
+              <td>Using data backups that include off-site or remote storage · Updating the Firewall's firmware · New Patch Pack</td>
+              <td>Technology</td>
+              <td><code>A.12.3.1, A.12.4.1, A.12.4.2, A.12.4.3, A.12.4.4</code></td>
+              <td>Information Security Department</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub" style="margin-top:1.5rem">
+        <div class="sub-hd">Full Annex A control reference</div>
+        <div class="ctrl-grid">
+          <div class="ctrl"><code>A.10.1.1</code><p>Policy on the use of cryptographic controls for protecting information</p></div>
+          <div class="ctrl"><code>A.10.1.2</code><p>Key management — protection, storage, and lifecycle of cryptographic keys</p></div>
+          <div class="ctrl"><code>A.12.3.1</code><p>Information backup — regular backups with off-site or remote storage</p></div>
+          <div class="ctrl"><code>A.12.4.1</code><p>Event logging — record user activities, exceptions, faults, and information security events</p></div>
+          <div class="ctrl"><code>A.12.4.2</code><p>Protection of log information — prevent tampering and unauthorised access</p></div>
+          <div class="ctrl"><code>A.12.4.3</code><p>Administrator and operator logs</p></div>
+          <div class="ctrl"><code>A.12.4.4</code><p>Clock synchronisation across all relevant systems</p></div>
+          <div class="ctrl"><code>A.11.1.1–1.5</code><p>Physical security perimeter, entry controls, securing offices, external threat protection, secure areas</p></div>
+          <div class="ctrl"><code>A.9.1.2</code><p>Access to networks and network services</p></div>
+          <div class="ctrl"><code>A.9.2.2 / A.9.2.3</code><p>User access provisioning · Management of privileged access rights</p></div>
+          <div class="ctrl"><code>A.9.4.2</code><p>Secure log-on procedures</p></div>
+          <div class="ctrl"><code>A.13.1.3 / A.13.2.1</code><p>Segregation in networks · Information transfer policies and procedures</p></div>
+        </div>
+      </div>
+
+      <div class="ibox" style="margin-top:1.25rem">
+        <strong>Management review requirements (as recommended):</strong>
+        <ul>
+          <li>Review the status of residual risks at defined intervals</li>
+          <li>Monitor changes in organisational legislation relevant to proposed additional controls (Table 5.3)</li>
+          <li>Review the status of tolerable risk as business context evolves</li>
+          <li>Evaluate possibilities for continual improvement in security controls — especially when new assets are onboarded</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOEING ESSAY ── -->
+<div class="sec reveal" id="boeing">
+  <div class="sec-hd"><span class="sec-tag">Project 2</span><h2>Boeing IS Policy — Critical Analysis</h2></div>
+  <div class="card">
+    <div class="card-hd">
+      <div>
+        <h3>Boeing's Information Security Policy on Securing Airline Information on Ground and in Air</h3>
+        <p>Course: Information Security Laws and Regulations · ITMO University, 2023 · Supervisor: Livshitz Ilya, PhD</p>
+      </div>
+      <div class="tags"><span class="tag">ISO 27001</span><span class="tag">ISO 27002</span><span class="tag">DMARC</span><span class="tag">Supply Chain Risk</span><span class="tag">Policy Analysis</span></div>
+    </div>
+    <div class="card-body">
+      <p class="card-intro">Boeing's information security policy to protect airline information on the ground and in the air is a critical component of the company's overall security program. This essay analysed that policy against ISO/IEC 27001:2013 and ISO/IEC 27002:2013 — the recognised international frameworks for information security management — identifying alignments, gaps, and specific improvement recommendations.</p>
+
+      <div class="sub" id="boeing-strengths">
+        <div class="sub-hd">Policy strengths — ISO alignment</div>
+        <div class="fb"><div class="bar" style="background:var(--green2)"></div><div class="fc">
+          <h5>Alignment with ISO 27001 — ISMS scope and risk identification</h5>
+          <p>Boeing's policy aligns with ISO/IEC 27001 by identifying risks to the organisation's information assets and defining the scope of the Information Security Management System. This satisfies the foundational requirements of Clause 4 and provides a structured baseline for all downstream security decisions.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--green2)"></div><div class="fc">
+          <h5>Alignment with ISO 27002 — coverage of core security domains</h5>
+          <p>The policy aligns with ISO/IEC 27002 by providing guidelines and general principles for initiating, implementing, maintaining, and improving information security management. Specifically, the policy covers data classification, access control, incident management, staff training, encryption requirements, and secure communication channels — reflecting the full breadth of ISO 27002 control domains.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--green2)"></div><div class="fc">
+          <h5>24/7 global ethics and incident reporting line</h5>
+          <p>Boeing operates a third-party managed ethics and incident reporting line, staffed 24 hours a day, seven days a week, available across 35 countries. This goes beyond technical controls to embed a security culture at an operational level — demonstrating commitment to people-and-process security.</p>
+        </div></div>
+      </div>
+
+      <div class="sub" id="boeing-gaps">
+        <div class="sub-hd">Critical gaps — identified vulnerabilities and policy contradictions</div>
+        <div class="fb"><div class="bar" style="background:var(--red2)"></div><div class="fc">
+          <h5>🔴 Critical — Test/development networks publicly exposed</h5>
+          <p>Despite a stated policy requirement to protect all data with encryption, Boeing's test development networks were publicly exposed to the internet — potentially enabling a sophisticated adversary to gain access to Boeing software source code and build systems. This is a direct contradiction of the policy's own encryption mandate, and represents a critical failure in network segmentation that could result in supply-chain-level compromise affecting downstream aircraft software.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--red2)"></div><div class="fc">
+          <h5>🔴 Critical — Email server infected with malware; no DMARC enforcement</h5>
+          <p>At least one of Boeing's email servers was found infected with multiple strains of malware. Boeing's email domain also lacked DMARC (Domain-based Message Authentication, Reporting and Conformance) — the protocol that ensures only email from legitimate sources reaches recipients' inboxes. Without DMARC, it would be easy to spoof email coming from boeing.com, enabling targeted phishing campaigns against Boeing employees, third-party suppliers, or government customers who interact with Boeing via email. Given Boeing's defence contracts, this gap has national security implications.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--amber2)"></div><div class="fc">
+          <h5>🟠 Medium — No third-party vendor security policy</h5>
+          <p>The ethics line is managed entirely by a third party and staffed around the clock, yet to the best of the analysis, there is no policy outlining how to handle third-party vendors. The policy could provide more guidance on how to handle incidents involving third-party partners or vendors. ISO 27002 §15.1 explicitly requires supplier relationships to be addressed within the ISMS, including contractual security obligations and audit rights.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--amber2)"></div><div class="fc">
+          <h5>🟠 Medium — Employee training programme is undefined</h5>
+          <p>While the policy acknowledges the importance of employee training, it could provide more specific guidance on what types of training should be provided, to whom the training must be provided, and how frequently it should be conducted. Without these specifics, compliance with ISO 27002 §6.3 (security awareness, education and training) is immeasurable and essentially unenforceable.</p>
+        </div></div>
+        <div class="fb"><div class="bar" style="background:var(--amber2)"></div><div class="fc">
+          <h5>🟠 Medium — Insufficient guidance on secure communication channels</h5>
+          <p>The policy could provide more detailed guidance on how to implement secure communication channels for transmitting sensitive information, particularly in the context of ground-to-air and inter-system data flows specific to the aviation environment.</p>
+        </div></div>
+      </div>
+
+      <div class="sub" id="boeing-recs">
+        <div class="sub-hd">Structured recommendations</div>
+        <div class="ctrl-grid">
+          <div class="ctrl"><code>Network Segmentation</code><p>Immediately isolate all test/development environments from public internet. Enforce strict DMZ architecture and air-gap critical build systems. Map to ISO 27002 §13.1.3.</p></div>
+          <div class="ctrl"><code>DMARC + DKIM + SPF</code><p>Deploy the full email authentication stack on boeing.com. Eradicate existing malware infections. Without all three protocols, the domain remains trivially spoofable.</p></div>
+          <div class="ctrl"><code>Vendor Risk Programme</code><p>Formalise a third-party security policy covering pre-engagement due diligence, contractual obligations, right-to-audit clauses, and vendor incident response procedures. Map to ISO 27002 §15.1.</p></div>
+          <div class="ctrl"><code>Training Framework</code><p>Define role-based training curricula, delivery modes, minimum frequency (at least annual), and measurable KPIs (completion rates, phishing simulation results). Map to ISO 27002 §6.3.</p></div>
+          <div class="ctrl"><code>Secure Comms Guidance</code><p>Provide explicit, implementation-level guidance on secure communication channels for sensitive data transmission in ground and airborne contexts.</p></div>
+        </div>
+        <div class="ibox" style="margin-top:1rem">
+          <strong>Overall assessment:</strong> Regardless of the possibilities for improvement, Boeing's IS policy does align with international standards and covers a range of critical areas — thereby giving Boeing an edge in protecting itself from possible attacks or incidents. The existing ISO-aligned structure provides a strong platform from which targeted remediation can close the identified gaps.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SKILLS ── -->
+<div class="sec reveal" id="skills">
+  <div class="sec-hd"><span class="sec-tag">Skills</span><h2>Skills demonstrated</h2></div>
+  <div class="skill-grid">
+    <div class="skill"><span class="skill-name">ISO 27005 Risk Assessment</span><span class="skill-sub">Full 5-phase lifecycle</span></div>
+    <div class="skill"><span class="skill-name">Asset Management</span><span class="skill-sub">21-asset classification &amp; ownership</span></div>
+    <div class="skill"><span class="skill-name">CVE Analysis</span><span class="skill-sub">Mapping, scoring, remediation</span></div>
+    <div class="skill"><span class="skill-name">Threat Modeling</span><span class="skill-sub">7-type categorisation, A/D/E origin</span></div>
+    <div class="skill"><span class="skill-name">Risk Quantification</span><span class="skill-sub">5×5 matrix, likelihood × impact</span></div>
+    <div class="skill"><span class="skill-name">ISO 27001 Annex A</span><span class="skill-sub">Control selection &amp; mapping</span></div>
+    <div class="skill"><span class="skill-name">Vulnerability Assessment</span><span class="skill-sub">Pen-test, network &amp; DB scans</span></div>
+    <div class="skill"><span class="skill-name">ISMS Design</span><span class="skill-sub">End-to-end implementation</span></div>
+    <div class="skill"><span class="skill-name">Policy Gap Analysis</span><span class="skill-sub">Benchmarking vs. ISO 27001/27002</span></div>
+    <div class="skill"><span class="skill-name">Email Security</span><span class="skill-sub">DMARC / DKIM / SPF</span></div>
+    <div class="skill"><span class="skill-name">Physical Security</span><span class="skill-sub">Annex A.11 perimeter controls</span></div>
+    <div class="skill"><span class="skill-name">Access Control</span><span class="skill-sub">Privileged access management</span></div>
+    <div class="skill"><span class="skill-name">Network Security</span><span class="skill-sub">Segmentation, DMZ, firewall policy</span></div>
+    <div class="skill"><span class="skill-name">Supply Chain Risk</span><span class="skill-sub">Third-party vendor security</span></div>
+    <div class="skill"><span class="skill-name">BCP / Resilience</span><span class="skill-sub">ISO 22301 awareness</span></div>
+    <div class="skill"><span class="skill-name">Technical Writing</span><span class="skill-sub">Management-ready security reports</span></div>
+  </div>
+</div>
+
+</div><!-- /body-wrap -->
 
 <footer>
   <p>Oje Johnson Pamilerin &nbsp;·&nbsp; ITMO University, Faculty of Secure Information Technologies, 2023</p>
-  <p style="margin-top:6px;">JOP Corp is a fictional company created solely for educational purposes.</p>
+  <p style="margin-top:5px">Supervisor: Livshitz Ilya, PhD &nbsp;·&nbsp; JOP Corp is a fictional company created solely for educational purposes</p>
+  <p style="margin-top:5px">Standards: ISO/IEC 13335-1:2004 · ISO/IEC 27005:2008 · ISO/IEC 27001:2013 · ISO/IEC 22301:2012 · ISO/IEC 31000:2018</p>
 </footer>
 
+<script>
+function togglePhase(btn){
+  const body=btn.nextElementSibling;
+  const open=btn.classList.contains('open');
+  document.querySelectorAll('.phase-btn').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open')});
+  if(!open){btn.classList.add('open');body.classList.add('open')}
+}
+
+const prog=document.getElementById('prog');
+const btop=document.getElementById('btop');
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY,t=document.documentElement.scrollHeight-window.innerHeight;
+  prog.style.width=(s/t*100)+'%';
+  document.getElementById('main-nav')&&document.getElementById('main-nav').classList.toggle('scrolled',s>10);
+  btop.classList.toggle('on',s>400);
+});
+
+const revEls=document.querySelectorAll('.reveal');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');observer.unobserve(e.target)}})
+},{threshold:.08}).observe=function(){};
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on')}})
+},{threshold:.08});
+revEls.forEach(el=>observer.observe(el));
+
+document.querySelectorAll('.hs-num').forEach(el=>{
+  const target=parseInt(el.dataset.c);let s=0;
+  const timer=setInterval(()=>{s=Math.min(s+target/50,target);el.textContent=Math.round(s);if(s>=target)clearInterval(timer)},20);
+});
+
+let barsGo=false;
+new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&!barsGo){barsGo=true;document.querySelectorAll('.rbar-fill').forEach(b=>{b.style.width=b.dataset.w+'%'})}
+},{threshold:.3}).observe(document.getElementById('rbars'));
+</script>
 </body>
 </html>
